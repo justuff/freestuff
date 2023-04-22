@@ -114,3 +114,49 @@ driver.quit()
 
 
 </details>
+
+
+<details>
+<summary>Install Google Chrome into Ubuntu 22.04</summary>
+
+```Python
+
+import subprocess
+
+# Check if Google Chrome is installed
+check_cmd = "google-chrome-stable --version"
+try:
+    output = subprocess.check_output(check_cmd, shell=True, stderr=subprocess.STDOUT)
+    print("Google Chrome is already installed.")
+    print(output.decode('utf-8'))
+except subprocess.CalledProcessError:
+    print("Google Chrome is not installed. Proceeding with installation...")
+
+    # Update package lists and upgrade existing packages
+    subprocess.run(["sudo", "apt", "update"])
+    subprocess.run(["sudo", "apt", "upgrade", "-y"])
+
+    # Install dependencies
+    subprocess.run(["sudo", "apt", "install", "-y", "wget", "curl", "unzip"])
+
+    # Download Google Chrome installation package
+    subprocess.run(["wget", "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"])
+
+    # Install Google Chrome package
+    subprocess.run(["sudo", "dpkg", "-i", "google-chrome-stable_current_amd64.deb"])
+
+    # Fix broken dependencies if any
+    subprocess.run(["sudo", "apt", "--fix-broken", "install", "-y"])
+
+    # Verify installation
+    try:
+        output = subprocess.check_output(check_cmd, shell=True, stderr=subprocess.STDOUT)
+        print("Google Chrome has been installed successfully.")
+        print(output.decode('utf-8'))
+    except subprocess.CalledProcessError:
+        print("Failed to install Google Chrome.")
+
+```
+
+
+</details>
