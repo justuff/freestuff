@@ -160,3 +160,51 @@ except subprocess.CalledProcessError:
 
 
 </details>
+
+
+<details>
+<summary>Create SystemD Service, Enable it, Start it, Check Status</summary>
+
+```Python
+
+import subprocess
+
+# Create autoLogIntoAppianEveryday.service file
+service_file = """[Unit]
+Description=Run autoLogIntoAppianEveryday script
+
+[Service]
+User=ubuntu
+ExecStart=/usr/bin/python3 /home/ubuntu/python/logIntoAppian.py
+WorkingDirectory=/home/ubuntu/python
+Restart=on-failure
+
+[Timer]
+OnCalendar=*-*-* 00:00:00
+Persistent=true
+
+[Install]
+WantedBy=multi-user.target"""
+with open('autoLogIntoAppianEveryday.service', 'w') as f:
+    f.write(service_file)
+
+# Move autoLogIntoAppianEveryday.service to /etc/systemd/system/
+subprocess.run(["sudo", "mv", "autoLogIntoAppianEveryday.service", "/etc/systemd/system/"])
+
+# Reload systemd configuration
+subprocess.run(["sudo", "systemctl", "daemon-reload])
+
+# Enable the timer to start automatically at boot
+subprocess.run(["sudo", "systemctl", "enable", "autoLogIntoAppianEveryday.service])
+
+# Start the service
+subprocess.run(["sudo", "systemctl", "start", "autoLogIntoAppianEveryday.service])
+
+# Verify service status
+subprocess.run(["sudo", "systemctl", "status", "autoLogIntoAppianEveryday.service])
+
+
+```
+
+
+</details>
