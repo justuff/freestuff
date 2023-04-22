@@ -192,16 +192,16 @@ with open('autoLogIntoAppianEveryday.service', 'w') as f:
 subprocess.run(["sudo", "mv", "autoLogIntoAppianEveryday.service", "/etc/systemd/system/"])
 
 # Reload systemd configuration
-subprocess.run(["sudo", "systemctl", "daemon-reload])
+subprocess.run(["sudo", "systemctl", "daemon-reload"])
 
 # Enable the timer to start automatically at boot
-subprocess.run(["sudo", "systemctl", "enable", "autoLogIntoAppianEveryday.service])
+subprocess.run(["sudo", "systemctl", "enable", "autoLogIntoAppianEveryday.service"])
 
 # Start the service
-subprocess.run(["sudo", "systemctl", "start", "autoLogIntoAppianEveryday.service])
+subprocess.run(["sudo", "systemctl", "start", "autoLogIntoAppianEveryday.service"])
 
 # Verify service status
-subprocess.run(["sudo", "systemctl", "status", "autoLogIntoAppianEveryday.service])
+subprocess.run(["sudo", "systemctl", "status", "autoLogIntoAppianEveryday.service"])
 
 
 ```
