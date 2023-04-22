@@ -2,11 +2,6 @@
 <details>
 <summary>Automated Login From Ubuntu 22.04 </summary>
 
-```python
-
-# selenium
-<details><summary>Automate the Login Into Appian Every Day</summary>
-
 ```Python
 # -----------------------------------------------------
 # Install Google Chrome
@@ -116,7 +111,6 @@ driver.quit()
 
 
 ```
-</details>
-```
+
 
 </details>
