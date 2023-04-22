@@ -1,6 +1,6 @@
 # freestuff
 <details>
-<summary>Automated Login From Ubuntu 22.04 </summary>
+<summary>Automate Log Into Appian From Ubuntu 22.04 </summary>
 
 ```Python
 # -----------------------------------------------------
