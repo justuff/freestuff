@@ -163,15 +163,14 @@ except subprocess.CalledProcessError:
 
 
 <details>
-<summary>Create SystemD Service, Enable it, Start it, Check Status</summary>
+<summary>Create SystemD Service and Timer, Enable it, Start it, Check Status</summary>
 
 ```Python
-
 import subprocess
 
-# Create autoLogIntoAppianEveryday.service file
+# Create autoLogIntoAppianEveryday2.service file
 service_file = """[Unit]
-Description=Run autoLogIntoAppianEveryday script
+Description=Run autoLogIntoAppianEveryday2 script
 
 [Service]
 User=ubuntu
@@ -179,31 +178,58 @@ ExecStart=/usr/bin/python3 /home/ubuntu/python/logIntoAppian.py
 WorkingDirectory=/home/ubuntu/python
 Restart=on-failure
 
-[Timer]
-OnCalendar=*-*-* 00:00:00
-Persistent=true
-
 [Install]
 WantedBy=multi-user.target"""
-with open('autoLogIntoAppianEveryday.service', 'w') as f:
+with open('autoLogIntoAppianEveryday2.service', 'w') as f:
     f.write(service_file)
 
-# Move autoLogIntoAppianEveryday.service to /etc/systemd/system/
-subprocess.run(["sudo", "mv", "autoLogIntoAppianEveryday.service", "/etc/systemd/system/"])
+# Move autoLogIntoAppianEveryday2.service to /etc/systemd/system/
+subprocess.run(["sudo", "mv", "autoLogIntoAppianEveryday2.service", "/etc/systemd/system/"])
 
 # Reload systemd configuration
 subprocess.run(["sudo", "systemctl", "daemon-reload"])
 
 # Enable the timer to start automatically at boot
-subprocess.run(["sudo", "systemctl", "enable", "autoLogIntoAppianEveryday.service"])
+subprocess.run(["sudo", "systemctl", "enable", "autoLogIntoAppianEveryday2.service"])
 
 # Start the service
-subprocess.run(["sudo", "systemctl", "start", "autoLogIntoAppianEveryday.service"])
+subprocess.run(["sudo", "systemctl", "start", "autoLogIntoAppianEveryday2.service"])
 
 # Verify service status
-subprocess.run(["sudo", "systemctl", "status", "autoLogIntoAppianEveryday.service"])
+subprocess.run(["sudo", "systemctl", "status", "autoLogIntoAppianEveryday2.service"])
 
+# -----------------------------------
+# Step 1: Create autoLogIntoAppianEveryday2.timer file
+timer_content = """
+[Unit]
+Description=Run autoLogIntoAppianEveryday2 script every 24 hours
 
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=24h
+Unit=autoLogIntoAppianEveryday2.service
+
+[Install]
+WantedBy=timers.target
+"""
+
+with open('autoLogIntoAppianEveryday2.timer', 'w') as f:
+    f.write(timer_content)
+
+# Step 2: Move autoLogIntoAppianEveryday2.timer file to /etc/systemd/system/
+subprocess.run(['sudo', 'mv', 'autoLogIntoAppianEveryday2.timer', '/etc/systemd/system/'])
+
+# Step 3: Reload SystemD
+subprocess.run(['sudo', 'systemctl', 'daemon-reload'])
+
+# Step 4: Enable the timer
+subprocess.run(['sudo', 'systemctl', 'enable', 'autoLogIntoAppianEveryday2.timer'])
+
+# Step 5: Start the timer
+subprocess.run(['sudo', 'systemctl', 'start', 'autoLogIntoAppianEveryday2.timer'])
+
+# Step 6: Verify timer status
+subprocess.run(['sudo', 'systemctl', 'status', 'autoLogIntoAppianEveryday2.timer'])
 ```
 
 
