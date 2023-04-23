@@ -36,10 +36,6 @@
 # WorkingDirectory=/home/ubuntu/python
 # Restart=on-failure
 
-# [Timer]
-# OnCalendar=*-*-* 00:00:00
-# Persistent=true
-
 # [Install]
 # WantedBy=multi-user.target
 #
@@ -54,6 +50,8 @@
 # 6) Verify that the service is running:
 #   sudo systemctl status autoLogIntoAppianEveryday.service
 
+# See Steps to create a timer to trigger the above service 
+    
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.support.ui import WebDriverWait
